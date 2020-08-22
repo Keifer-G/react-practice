@@ -17,7 +17,45 @@ class Complete extends React.Component{
     }
     
     buttonClick = (number,color) =>{
-
+        let { result, continuea, content} = this.state;
+        if(!color && !Object.is(parseInt(number), NaN)){
+                this.setState({
+                    continuea :  continuea + number,
+                    result : continuea + number,
+                    content : content + number
+                })
+        }else{
+            if(number == "=" || number == "+" || number == "-" || number == "/" || number == "*"){
+                if(number=="="){
+                    try{
+                        let res = eval(content);
+                        this.setState({
+                            result : res,
+                            continuea : '',
+                            content : content + number
+                        })
+                    }catch{
+                        return;
+                    }
+                }else{
+                    try{
+                        let res = eval(content);
+                        this.setState({
+                            result : res,
+                            continuea : '',
+                            content : res + number
+                         })
+                    }catch{
+                        this.setState({
+                            continuea : '',
+                            content: result + number
+                        })
+                    }
+                }
+            }else{
+                alert("功能暂未拓展！")
+            }
+        }
     }
 
     render(){
